@@ -14,7 +14,8 @@ def swfupload_load(options)
   form_id=options[:form_id] || "form"
   #Send form data with upload ? 
   send_form_data=options[:send_form_data] || true
-
+  #
+  file_post_name=options[:file_post_name] || "Filedata"
 
 
  if send_form_data==true
@@ -42,6 +43,7 @@ def swfupload_load(options)
       var settings = {
         flash_url : "/javascripts/swf/swfupload.swf",
         upload_url: "#{upload_url}",
+        file_post_name : "#{file_post_name}",
         post_params : {"authenticity_token" : "#{form_authenticity_token}","_session_id":"#{session.session_id}"},
         file_size_limit : "#{file_size_limit}",
         file_types : "#{file_types}",

@@ -35,14 +35,17 @@ Example
 =======
 
 == View (create.html.erb or form.html.erb)
-<%= swfupload_load({:upload_url=>"/admin/photos/create"}) %>
+<%= swfupload_load({:upload_url=>"/admin/photos/create",:file_post_name=>"photo[photo]"}) %>
 
-<span id="spanButtonPlaceHolder"></span>
-    <div class="fieldset flash" id="fsUploadProgress">
-<span>Upload Queue</span>
-<div id="divStatus">0 Files Uploaded</div>
-<input id="btnCancel" type="button" value="Cancel All Uploads" onclick="swfu.cancelQueue();" disabled="disabled" style="margin-left: 2px; font-size: 8pt; height: 29px;" />
+<% form_for  @photo, :html => { :multipart => true } do |f| %>
 
+    <span id="spanButtonPlaceHolder"></span>
+        <div class="fieldset flash" id="fsUploadProgress">
+    <span>Upload Queue</span>
+    <div id="divStatus">0 Files Uploaded</div>
+    <input id="btnCancel" type="button" value="Cancel All Uploads" onclick="swfu.cancelQueue();" disabled="disabled" style="margin-left: 2px; font-size: 8pt; height: 29px;" />
+
+<% end %>
 
 == Model (photo.rb)
 has_attached_file :photo,
@@ -53,12 +56,12 @@ has_attached_file :photo,
 
 == Controller (photos_controller.rb)
 def create
-    @photo = Photo.new(:photo => params[:Filedata])
+    @photo = Photo.new(params[:photo])
     respond_to do |format|
         if @photo.save
             format.html{render :text => "$('#photo_uploaded').append('<div class=\"photo_preview\"><img src=\"#{@photo.photo.url}\" alt=\"\"/></div>');" }
         else
-            format.html{render :text => "Alert('@photo.full_messages.to_s');"}
+            format.html{render :text => "alert('#{@photo.errors.full_messages}');"}
         end
     end
 end
