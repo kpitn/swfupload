@@ -37,9 +37,9 @@ def create
     @photo = Photo.new(:photo => params[:Filedata])
     respond_to do |format|
         if @photo.save
-            format.js{render :text => "$('#photo_uploaded').append('<div class=\"photo_preview\"><img src=\"#{@photo.photo.url}\" alt=\"\"/></div>');" }
+            format.html{render :text => "$('#photo_uploaded').append('<div class=\"photo_preview\"><img src=\"#{@photo.photo.url}\" alt=\"\"/></div>');" }
         else
-            format.js{render :text => "Alert('Error');"}
+            format.html{render :text => "Alert('Error');"}
         end
     end
 end
