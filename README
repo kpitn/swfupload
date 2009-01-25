@@ -1,13 +1,49 @@
 Swfupload
 =========
 
-Send File with SwfUpload
+Send File with SwfUpload and Paperclip
 
-SwfUpload documentation :  http://demo.swfupload.org/Documentation/
 SwfUpload Website : http://code.google.com/p/swfupload/
+SwfUpload documentation :  http://demo.swfupload.org/Documentation/
+
+Paperclip Website : http://www.thoughtbot.com/projects/paperclip
+Paperclip Documentation : http://dev.thoughtbot.com/paperclip/
+
+Installation
+========
+
+== Paperclip Installattion
+script/install plugin git://github.com/thoughtbot/paperclip.git
+
+== SwfUpload Installattion
+script/install plugin git://github.com/kpitn/swfupload.git
 
 
 Example
 =======
+
+== View (create.html.erb or form.html.erb)
+swfupload_load({:upload_url=>"/admin/photos/create"})
+
+== Model (photo.rb)
+has_attached_file :photo,
+                :styles => { :original=>"700x525>",:small => "120x90>" },
+                :default_style => :small,
+                :path => ":rails_root/public/gallery/:id_:style_:basename.:extension",
+                :url  => "/gallery/:id_:style_:basename.:extension"
+
+== Controller (photos_controller.rb)
+def create
+    @photo = Photo.new(:photo => params[:Filedata])
+    respond_to do |format|
+        if @photo.save
+            format.js{render :text => "$('#photo_uploaded').append('<div class=\"photo_preview\"><img src=\"#{@photo.photo.url}\" alt=\"\"/></div>');" }
+        else
+            format.js{render :text => "Alert('Error');"}
+        end
+    end
+end
+
+
 
 Copyright (c) 2009 Pierre BASILE, released under the MIT license
