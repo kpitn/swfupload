@@ -9,6 +9,12 @@ SwfUpload documentation :  http://demo.swfupload.org/Documentation/
 Paperclip Website : http://www.thoughtbot.com/projects/paperclip
 Paperclip Documentation : http://dev.thoughtbot.com/paperclip/
 
+
+Explication
+========
+Cookie fix integrate : http://blog.airbladesoftware.com/2007/8/8/uploading-files-with-swfupload
+Authenticity token is send
+
 Installation
 ========
 

@@ -1,12 +1,3 @@
-# hacks for swfupload + cookie store to work
-# see http://blog.airbladesoftware.com/2007/8/8/uploading-files-with-swfupload
-#
-# also need to put
-# session :cookie_only => false, :only => :create
-# into the controller where the files are being uploaded (change method as appropriate)
-#
-# this goes in environment.rb
-
 class CGI::Session
   alias original_initialize initialize
   def initialize(request, option = {})
