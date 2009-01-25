@@ -10,10 +10,14 @@ Paperclip Website : http://www.thoughtbot.com/projects/paperclip
 Paperclip Documentation : http://dev.thoughtbot.com/paperclip/
 
 
-Explication
+What's in ?
 ========
 Cookie fix integrate : http://blog.airbladesoftware.com/2007/8/8/uploading-files-with-swfupload
 Authenticity token is send
+Swfupload V 2.0.2
+Test with Rails 2.2.2 and Flash 10 on Linux
+
+
 
 Installation
 ========
