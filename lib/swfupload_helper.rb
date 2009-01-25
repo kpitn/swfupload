@@ -7,8 +7,9 @@ def swfupload_load(options)
   file_size_limit=(options[:file_size_limit] || "10")+ " MB"
   file_types=options[:file_type] || "*.*" 
   file_upload_limit=options[:file_upload_limit].to_i || 100
-  button_image_url=options[:button_image_url] || "/javascripts/swf/testimage.png"
+  button_image_url=options[:button_image_url] || "/javascripts/swf/test_image.png"
   debug=options[:debug] || false
+  form_id=options[:form_id] || "form"
 
   return_data=""
   return_data+=javascript_include_tag "swf/swfupload.js"
@@ -62,6 +63,13 @@ def swfupload_load(options)
 
     function uploadSuccess(fileObj,data) {
       eval(data);
+    }
+    function uploadStart(){
+      //add fom parameters
+      var datas = $("#{form_id}").serializeArray();
+      for (var i = 0; i < datas.length; i++) {
+       swfu.addPostParam(datas[i].name,datas[i].value);
+      }
     }
   </script>
   EOS
