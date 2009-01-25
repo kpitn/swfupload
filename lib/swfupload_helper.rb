@@ -8,8 +8,26 @@ def swfupload_load(options)
   file_types=options[:file_type] || "*.*" 
   file_upload_limit=options[:file_upload_limit].to_i || 100
   button_image_url=options[:button_image_url] || "/javascripts/swf/test_image.png"
+  #Show swfupload debug
   debug=options[:debug] || false
+  #Id of the form the form of the page =>  #fomulaire_id 
   form_id=options[:form_id] || "form"
+  #Send form data with upload ? 
+  send_form_data=options[:send_form_data] || true
+
+
+
+ if send_form_data==true
+      function_send_form_data=<<-EOS
+      function uploadStart(){
+        //add fom parameters
+        var datas = $("#{form_id}").serializeArray();
+        for (var i = 0; i < datas.length; i++) {
+         swfu.addPostParam(datas[i].name,datas[i].value);
+        }
+      }
+      EOS
+  end
 
   return_data=""
   return_data+=javascript_include_tag "swf/swfupload.js"
@@ -64,13 +82,7 @@ def swfupload_load(options)
     function uploadSuccess(fileObj,data) {
       eval(data);
     }
-    function uploadStart(){
-      //add fom parameters
-      var datas = $("#{form_id}").serializeArray();
-      for (var i = 0; i < datas.length; i++) {
-       swfu.addPostParam(datas[i].name,datas[i].value);
-      }
-    }
+    #{function_send_form_data}
   </script>
   EOS
   return_data
