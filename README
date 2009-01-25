@@ -59,9 +59,17 @@ def create
     @photo = Photo.new(params[:photo])
     respond_to do |format|
         if @photo.save
-            format.html{render :text => "$('#photo_uploaded').append('<div class=\"photo_preview\"><img src=\"#{@photo.photo.url}\" alt=\"\"/></div>');" }
+            format.js{
+            render :update do |page|
+                page.insert_html :bottom,"photo_uploaded","<div class=\"photo_preview\"><img src=\"#{@photo.photo.url}\" alt=\"\"/></div>"
+             end
+            }
         else
-            format.html{render :text => "alert('#{@photo.errors.full_messages}');"}
+            format.js{
+            render :update do |page|
+                page << "alert('#{@photo.errors.full_messages}');"
+             end
+             }
         end
     end
 end
