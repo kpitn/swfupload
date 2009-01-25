@@ -39,7 +39,7 @@ def create
         if @photo.save
             format.html{render :text => "$('#photo_uploaded').append('<div class=\"photo_preview\"><img src=\"#{@photo.photo.url}\" alt=\"\"/></div>');" }
         else
-            format.html{render :text => "Alert('Error');"}
+            format.html{render :text => "Alert('@photo.full_messages.to_s');"}
         end
     end
 end
