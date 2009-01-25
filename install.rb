@@ -1,6 +1,6 @@
 # Install hook code here
 puts "Copying files..."
-dir = "javascripts/swf"
+dir = "/javascripts/swf"
 makedirs(RAILS_ROOT+"public"+dir)
 ["swfupload.js", "swfupload.swf", "swfupload.cookies.js","fileprogress.js","handler.js","swfupload.cookie.js"].each do |js_file|
 	dest_file = File.join(RAILS_ROOT, "public", dir, js_file)
