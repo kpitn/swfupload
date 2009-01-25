@@ -33,7 +33,14 @@ Example
 =======
 
 == View (create.html.erb or form.html.erb)
-swfupload_load({:upload_url=>"/admin/photos/create"})
+<%= swfupload_load({:upload_url=>"/admin/photos/create"}) %>
+
+<span id="spanButtonPlaceHolder"></span>
+    <div class="fieldset flash" id="fsUploadProgress">
+<span>Upload Queue</span>
+<div id="divStatus">0 Files Uploaded</div>
+<input id="btnCancel" type="button" value="Cancel All Uploads" onclick="swfu.cancelQueue();" disabled="disabled" style="margin-left: 2px; font-size: 8pt; height: 29px;" />
+
 
 == Model (photo.rb)
 has_attached_file :photo,
