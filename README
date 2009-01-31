@@ -25,10 +25,10 @@ Installation
 ========
 
 == Paperclip Installattion
-script/install plugin git://github.com/thoughtbot/paperclip.git
+script/plugin install git://github.com/thoughtbot/paperclip.git
 
 == SwfUpload Installattion
-script/install plugin git://github.com/kpitn/swfupload.git
+script/plugin install git://github.com/kpitn/swfupload.git
 
 
 Example
