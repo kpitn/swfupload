@@ -1,0 +1,98 @@
+h1. Swfupload
+
+Send File with SwfUpload and Paperclip
+
+SwfUpload Website : http://code.google.com/p/swfupload/
+SwfUpload documentation :  http://demo.swfupload.org/Documentation/
+
+Paperclip Website : http://www.thoughtbot.com/projects/paperclip
+Paperclip Documentation : http://dev.thoughtbot.com/paperclip/
+
+h1. What's in ?
+
+Cookie fix integrate : http://thewebfellas.com/blog/2008/12/22/flash-uploaders-rails-cookie-based-sessions-and-csrf-rack-middleware-to-the-rescue
+Authenticity token is send
+Form data are send (Jquery)
+Swfupload V 2.0.2
+Test with Rails 2.3.0 and Flash 10 on Linux
+
+
+h1. Installation
+
+== Paperclip Installattion
+script/plugin install git://github.com/thoughtbot/paperclip.git
+
+== SwfUpload Installattion
+script/plugin install git://github.com/kpitn/swfupload.git
+
+
+h1. Example
+
+== Define photo Helper (photos_helper.rb) *very important*
+_If you use Admin -> Galleries -> Photos path_
+<pre>
+  def new_admin_gallery_photo_path_with_session_information(gallery)
+    session_key = ActionController::Base.session_options[:key]
+    admin_gallery_photos_path(gallery,session_key => cookies[session_key])
+  end
+</pre>
+  _If you use Galleries -> photos path_
+<pre>
+  def new_gallery_photo_path_with_session_information(gallery)
+    session_key = ActionController::Base.session_options[:key]
+    gallery_photos_path(gallery,session_key => cookies[session_key])
+  end
+</pre>
+_If you use photos path_
+<pre>
+  def new_photo_path_with_session_information()
+    session_key = ActionController::Base.session_options[:key]
+    photos_path(session_key => cookies[session_key])
+  end
+</pre>
+
+== View (new.html.erb or form.html.erb)
+<pre>
+<%= swfupload_load({:upload_url=>*function define in photos_helper.rb*,:file_post_name=>"photo[photo]"}) %>
+
+<% form_for  @photo, :html => { :multipart => true } do |f| %>
+
+    <span id="spanButtonPlaceHolder"></span>
+        <div class="fieldset flash" id="fsUploadProgress">
+    <span>Upload Queue</span>
+    <div id="divStatus">0 Files Uploaded</div>
+    <input id="btnCancel" type="button" value="Cancel All Uploads" onclick="swfu.cancelQueue();" disabled="disabled" style="margin-left: 2px; font-size: 8pt; height: 29px;" />
+
+<% end %>
+</pre>
+== Model (photo.rb)
+<pre>
+has_attached_file :photo,
+                :styles => { :original=>"700x525>",:small => "120x90>" },
+                :default_style => :small,
+                :path => ":rails_root/public/gallery/:id_:style_:basename.:extension",
+                :url  => "/gallery/:id_:style_:basename.:extension"
+</pre>
+== Controller (photos_controller.rb)
+<pre>
+def create
+    @photo = Photo.new(params[:photo])
+    respond_to do |format|
+        if @photo.save
+            format.js{
+            render :update do |page|
+                page.insert_html :bottom,"photo_uploaded","<div class=\"photo_preview\"><img src=\"#{@photo.photo.url}\" alt=\"\"/></div>"
+             end
+            }
+        else
+            format.js{
+            render :update do |page|
+                page << "alert('#{@photo.errors.full_messages}');"
+             end
+             }
+        end
+    end
+end
+</pre>
+
+Copyright (c) 2009 Pierre BASILE, released under the MIT license
