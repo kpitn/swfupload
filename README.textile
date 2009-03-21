@@ -3,19 +3,24 @@ h1. Swfupload
 Send File with SwfUpload and Paperclip
 
 SwfUpload Website : http://code.google.com/p/swfupload/
+
 SwfUpload documentation :  http://demo.swfupload.org/Documentation/
 
 Paperclip Website : http://www.thoughtbot.com/projects/paperclip
+
 Paperclip Documentation : http://dev.thoughtbot.com/paperclip/
 
 h1. What's in ?
 
 Cookie fix integrate : http://thewebfellas.com/blog/2008/12/22/flash-uploaders-rails-cookie-based-sessions-and-csrf-rack-middleware-to-the-rescue
-Authenticity token is send
-Form data are send (Jquery)
-Swfupload V 2.0.2
-Test with Rails 2.3.0 and Flash 10 on Linux
 
+Authenticity token is send
+
+Form data are send (Jquery)
+
+Swfupload V 2.0.2
+
+Test with Rails 2.3.0 and Flash 10 on Linux
 
 h1. Installation
 
@@ -28,7 +33,8 @@ script/plugin install git://github.com/kpitn/swfupload.git
 
 h1. Example
 
-== Define photo Helper (photos_helper.rb) *very important*
+h2. Define photo Helper (photos_helper.rb) *very important*
+
 _If you use Admin -> Galleries -> Photos path_
 <pre>
   def new_admin_gallery_photo_path_with_session_information(gallery)
@@ -51,7 +57,8 @@ _If you use photos path_
   end
 </pre>
 
-== View (new.html.erb or form.html.erb)
+h2. View (new.html.erb or form.html.erb)
+
 <pre>
 <%= swfupload_load({:upload_url=>*function define in photos_helper.rb*,:file_post_name=>"photo[photo]"}) %>
 
@@ -65,7 +72,9 @@ _If you use photos path_
 
 <% end %>
 </pre>
-== Model (photo.rb)
+
+h2. Model (photo.rb)
+
 <pre>
 has_attached_file :photo,
                 :styles => { :original=>"700x525>",:small => "120x90>" },
@@ -73,7 +82,9 @@ has_attached_file :photo,
                 :path => ":rails_root/public/gallery/:id_:style_:basename.:extension",
                 :url  => "/gallery/:id_:style_:basename.:extension"
 </pre>
-== Controller (photos_controller.rb)
+
+h2. Controller (photos_controller.rb)
+
 <pre>
 def create
     @photo = Photo.new(params[:photo])
