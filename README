@@ -9,16 +9,13 @@ SwfUpload documentation :  http://demo.swfupload.org/Documentation/
 Paperclip Website : http://www.thoughtbot.com/projects/paperclip
 Paperclip Documentation : http://dev.thoughtbot.com/paperclip/
 
-
 What's in ?
 ========
-Cookie fix integrate : http://blog.airbladesoftware.com/2007/8/8/uploading-files-with-swfupload
+Cookie fix integrate : http://thewebfellas.com/blog/2008/12/22/flash-uploaders-rails-cookie-based-sessions-and-csrf-rack-middleware-to-the-rescue
 Authenticity token is send
 Form data are send (Jquery)
 Swfupload V 2.0.2
-Test with Rails 2.2.2 and Flash 10 on Linux
-
-
+Test with Rails 2.3.0 and Flash 10 on Linux
 
 
 Installation
@@ -34,8 +31,31 @@ script/plugin install git://github.com/kpitn/swfupload.git
 Example
 =======
 
-== View (create.html.erb or form.html.erb)
-<%= swfupload_load({:upload_url=>"/admin/photos/create",:file_post_name=>"photo[photo]"}) %>
+== Helper (photos_helper.rb)
+_If you use Admin -> Galleries -> Photos path_
+<pre>
+  def new_admin_gallery_photo_path_with_session_information(gallery)
+    session_key = ActionController::Base.session_options[:key]
+    admin_gallery_photos_path(gallery,session_key => cookies[session_key])
+  end
+</pre>
+  _If you use Galleries -> photos path_
+<pre>
+  def new_gallery_photo_path_with_session_information(gallery)
+    session_key = ActionController::Base.session_options[:key]
+    gallery_photos_path(gallery,session_key => cookies[session_key])
+  end
+</pre>
+_If you use photos path_
+<pre>
+  def new_photo_path_with_session_information()
+    session_key = ActionController::Base.session_options[:key]
+    photos_path(session_key => cookies[session_key])
+  end
+</pre>
+
+== View (new.html.erb or form.html.erb)
+<%= swfupload_load({:upload_url=>*function define in photos_helper.rb*,:file_post_name=>"photo[photo]"}) %>
 
 <% form_for  @photo, :html => { :multipart => true } do |f| %>
 
