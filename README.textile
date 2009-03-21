@@ -27,8 +27,14 @@ h1. Installation
 == Paperclip Installattion
 script/plugin install git://github.com/thoughtbot/paperclip.git
 
+gem ImageMagick
+gem mini_magick gem
+gem mime-types gem
+
+
 == SwfUpload Installattion
 script/plugin install git://github.com/kpitn/swfupload.git
+
 
 
 h1. Example
