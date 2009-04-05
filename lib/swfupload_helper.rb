@@ -45,7 +45,6 @@ def swfupload_load(options)
         upload_url: "#{upload_url}",
         file_post_name : "#{file_post_name}",
         post_params : {"#{request_forgery_protection_token}":"#{escape_javascript form_authenticity_token}"},
-//        post_params : {"#{request_forgery_protection_token}":encodeURIComponent("#{escape_javascript form_authenticity_token}"),"_session_id":"#{u(session.id.gsub("\n",""))}"},
         file_size_limit : "#{file_size_limit}",
         file_types : "#{file_types}",
         file_types_description : "All Files",
